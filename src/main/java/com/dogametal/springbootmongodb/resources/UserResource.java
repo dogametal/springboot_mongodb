@@ -1,5 +1,6 @@
 package com.dogametal.springbootmongodb.resources;
 
+import java.net.URI;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,9 +8,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.dogametal.springbootmongodb.domain.User;
 import com.dogametal.springbootmongodb.dto.UserDTO;
@@ -41,6 +44,19 @@ public class UserResource {
 		return ResponseEntity.ok().body(new UserDTO(obj)); //Create new object DTO for this searching 
 
 	}
+	
+	@RequestMapping(method = RequestMethod.POST) // Another way to use this request @PostMapping
+	public ResponseEntity <Void> insert(@RequestBody UserDTO objDTO){		
+		//Convert userDTO to User
+		User obj = service.fromDTO(objDTO);
+		obj = service.insert(obj);
+		//Get address new object add
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		
+		//Create status 201 right response for this method		 
+		return ResponseEntity.created(uri).build();
+
+	}	
 	
 	
 }
