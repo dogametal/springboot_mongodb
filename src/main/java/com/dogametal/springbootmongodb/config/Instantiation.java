@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.dogametal.springbootmongodb.domain.Post;
 import com.dogametal.springbootmongodb.domain.User;
+import com.dogametal.springbootmongodb.dto.AuthorDTO;
 import com.dogametal.springbootmongodb.repository.PostRepository;
 import com.dogametal.springbootmongodb.repository.UserRepository;
 
@@ -37,10 +38,11 @@ public class Instantiation implements CommandLineRunner {
 		userRepository.saveAll(Arrays.asList(maria, alex, bob, douglas, daniel));
 		
 		postRepository.deleteAll();
-		Post post1 = new Post(null,sdf.parse("26/11/2020"), "Partiu nascimento", "Seja bem vindo, filho !", douglas);
-		Post post2 = new Post(null,sdf.parse("27/11/2020"), "Nasceu  !!!", "Papai ama Daniel ", douglas);
+		Post post1 = new Post(null,sdf.parse("26/11/2020"), "Partiu nascimento", "Seja bem vindo, filho !", new AuthorDTO(douglas));
+		Post post2 = new Post(null,sdf.parse("27/11/2020"), "Nasceu  !!!", "Papai ama Daniel ", new AuthorDTO(douglas));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
+		
 	}
 	
 	
