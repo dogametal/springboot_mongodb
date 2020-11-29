@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.dogametal.springbootmongodb.domain.Post;
 import com.dogametal.springbootmongodb.domain.User;
 import com.dogametal.springbootmongodb.dto.AuthorDTO;
+import com.dogametal.springbootmongodb.dto.CommentDTO;
 import com.dogametal.springbootmongodb.repository.PostRepository;
 import com.dogametal.springbootmongodb.repository.UserRepository;
 
@@ -40,6 +41,13 @@ public class Instantiation implements CommandLineRunner {
 		postRepository.deleteAll();
 		Post post1 = new Post(null,sdf.parse("26/11/2020"), "Partiu nascimento", "Seja bem vindo, filho !", new AuthorDTO(douglas));
 		Post post2 = new Post(null,sdf.parse("27/11/2020"), "Nasceu  !!!", "Papai ama Daniel ", new AuthorDTO(douglas));
+		
+		CommentDTO c1 = new CommentDTO("Good News, Doug", sdf.parse("26/11/2020"), new AuthorDTO(maria));
+		CommentDTO c2 = new CommentDTO("Luck my friend, be patient !", sdf.parse("26/11/2020"), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("Your the man Congratulations my friend !", sdf.parse("27/11/2020"), new AuthorDTO(alex));
+		
+		post1.getComments().addAll(Arrays.asList(c1, c2));
+		post2.getComments().addAll(Arrays.asList(c3));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		
