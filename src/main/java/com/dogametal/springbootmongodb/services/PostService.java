@@ -23,6 +23,8 @@ public class PostService {
 	}
 	
 	public List<Post> findByTitle (String text){
-		return repo.findByTitleContainingIgnoreCase(text);
+		// method used by spring framework
+		//return repo.findByTitleContainingIgnoreCase(text);
+		return repo.searchTitle(text);
 	}
 }
